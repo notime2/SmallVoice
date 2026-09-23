@@ -27,10 +27,10 @@ public enum ModelFiles {
         URL(string: "https://huggingface.co/\(repository)/resolve/\(revision)/\(file.name)")!
     }
 
-    /// `~/Library/Application Support/NoType/Models/parakeet-redux/<revision>`
+    /// `~/Library/Application Support/SmallVoice/Models/parakeet-redux/<revision>`
     public static var defaultDirectory: URL {
         URL.applicationSupportDirectory
-            .appending(path: "NoType/Models/parakeet-redux/\(revision)", directoryHint: .isDirectory)
+            .appending(path: "SmallVoice/Models/parakeet-redux/\(revision)", directoryHint: .isDirectory)
     }
 
     /// True when every file is present with the expected size. Hashes are checked once, at download.

@@ -175,7 +175,7 @@ private final class FileDownloader: NSObject, URLSessionDownloadDelegate, @unche
             finish(.failure(DownloadError.http(code)))
             return
         }
-        let destination = FileManager.default.temporaryDirectory.appending(path: "NoType-\(UUID().uuidString)")
+        let destination = FileManager.default.temporaryDirectory.appending(path: "SmallVoice-\(UUID().uuidString)")
         do {
             try FileManager.default.moveItem(at: location, to: destination)
             finish(.success(destination))

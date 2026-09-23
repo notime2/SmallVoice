@@ -4,7 +4,7 @@ import Synchronization
 import os
 
 enum Log {
-    private static let subsystem = Bundle.main.bundleIdentifier ?? "NoType"
+    private static let subsystem = Bundle.main.bundleIdentifier ?? "SmallVoice"
     static let app = Logger(subsystem: subsystem, category: "app")
     static let audio = Logger(subsystem: subsystem, category: "audio")
     static let hotkey = Logger(subsystem: subsystem, category: "hotkey")

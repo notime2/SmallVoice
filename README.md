@@ -1,8 +1,8 @@
-# NoType
+# SmallVoice
 
 [Русская версия](README.ru.md)
 
-NoType is native dictation for macOS that lives in the menu bar. Hold a key, speak, and the text
+SmallVoice is native dictation for macOS that lives in the menu bar. Hold a key, speak, and the text
 appears wherever your cursor is. Speech is recognized on your Mac by
 [Parakeet Redux](https://huggingface.co/moondream/parakeet-redux), a 1.58-bit version of NVIDIA
 Parakeet TDT 0.6B v3: 25 languages including English and Russian, with punctuation and casing.
@@ -10,7 +10,7 @@ Nothing leaves your computer.
 
 ## Using it
 
-| You do | NoType does |
+| You do | SmallVoice does |
 |---|---|
 | Hold the right ⌥ key and speak | Records while the key is down and inserts the text when you let go (push-to-talk) |
 | Tap the right ⌥ key | Keeps listening hands-free (a lock shows in the indicator); tap again to finish |
@@ -35,22 +35,22 @@ Nothing leaves your computer.
 
 ## Installing a release
 
-NoType is not signed with an Apple Developer ID and not notarized: the project has no paid Apple
+SmallVoice is not signed with an Apple Developer ID and not notarized: the project has no paid Apple
 Developer account. macOS therefore refuses to open a downloaded copy until you allow it once.
 
-1. Download `NoType.dmg` from the Releases page, open it and drag NoType to Applications.
+1. Download `SmallVoice.dmg` from the Releases page, open it and drag SmallVoice to Applications.
 2. Remove the download quarantine:
 
    ```bash
-   xattr -dr com.apple.quarantine /Applications/NoType.app
+   xattr -dr com.apple.quarantine /Applications/SmallVoice.app
    ```
 
-   Without Terminal: open NoType, close the warning, then click "Open Anyway" in System Settings ->
+   Without Terminal: open SmallVoice, close the warning, then click "Open Anyway" in System Settings ->
    Privacy & Security.
 
 Without a stable signature every new version is a new app to macOS. After updating, allow the
 microphone again, and in System Settings -> Privacy & Security -> Accessibility remove the old
-NoType entry and switch the new one on.
+SmallVoice entry and switch the new one on.
 
 ## Building from source
 
@@ -58,7 +58,7 @@ NoType entry and switch the new one on.
 make install    # Release build copied to /Applications and launched
 make test       # engine tests (the transcription tests need the downloaded model)
 make build      # Debug build in build/DerivedData
-make dmg        # build/NoType.dmg from the Release build
+make dmg        # build/SmallVoice.dmg from the Release build
 ```
 
 Builds are signed ad hoc by default, so no Apple developer account is needed. macOS then treats
@@ -76,11 +76,11 @@ A setup window asks for:
 - a one-time download of the speech model (178 MB).
 
 The model is downloaded from Hugging Face at a pinned revision, checked against its SHA-256 and kept
-in `~/Library/Application Support/NoType/Models/`.
+in `~/Library/Application Support/SmallVoice/Models/`.
 
 ## Making a release
 
-`make dmg` builds `build/NoType.dmg` from the Release build. CI (GitHub Actions, Xcode 26) also runs
+`make dmg` builds `build/SmallVoice.dmg` from the Release build. CI (GitHub Actions, Xcode 26) also runs
 the engine unit tests and uploads that ad-hoc signed image as a build artifact. That image is what
 gets published, together with the install steps above.
 
@@ -88,7 +88,7 @@ With a Developer ID certificate, `scripts/notarize.sh` would sign and notarize t
 anywhere without those steps:
 
 ```bash
-xcrun notarytool store-credentials NoType --apple-id you@example.com --team-id ABCDE12345
+xcrun notarytool store-credentials SmallVoice --apple-id you@example.com --team-id ABCDE12345
 DEVELOPER_ID="Developer ID Application: Your Name (ABCDE12345)" scripts/notarize.sh
 ```
 
@@ -102,7 +102,7 @@ Packages/ParakeetKit/   speech engine on MLX (Metal GPU), independent of the app
   Decoder.swift         LSTM prediction network and greedy TDT decoding
   Segmenter.swift       cutting long audio at pauses
   ParakeetEngine.swift  actor: loading, warm-up, transcription
-NoType/                 the app (SwiftUI and AppKit)
+SmallVoice/                 the app (SwiftUI and AppKit)
   Dictation/            the hotkey state machine, microphone capture, text insertion
   Input/                hotkeys and permissions
   Model/                model download and verification
@@ -136,9 +136,9 @@ Loading the model with its warm-up pass takes about 0.4 s. While idle the app us
 ### Debug flags
 
 ```bash
-NoType.app/Contents/MacOS/NoType --transcribe a.wav b.m4a   # transcribe files and report speed
-open NoType.app --args --hud-demo [recording|hands-free|processing|success|message]
-open NoType.app --args --onboarding
+SmallVoice.app/Contents/MacOS/SmallVoice --transcribe a.wav b.m4a   # transcribe files and report speed
+open SmallVoice.app --args --hud-demo [recording|hands-free|processing|success|message]
+open SmallVoice.app --args --onboarding
 ```
 
 ## Privacy
@@ -149,7 +149,7 @@ kept in memory and are gone when you quit.
 
 ## License and credits
 
-NoType is released under the [MIT License](LICENSE).
+SmallVoice is released under the [MIT License](LICENSE).
 
 - Speech model: [Parakeet Redux](https://huggingface.co/moondream/parakeet-redux) by Moondream, based
   on [NVIDIA Parakeet TDT 0.6B v3](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3), licensed under

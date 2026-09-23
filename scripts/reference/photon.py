@@ -12,7 +12,7 @@ import time
 import moondream as md
 
 model_dir = os.path.expanduser(
-    "~/Library/Application Support/NoType/Models/parakeet-redux/ab9eb5ef7b81f98211b3feb68e5a856cab71f913")
+    "~/Library/Application Support/SmallVoice/Models/parakeet-redux/ab9eb5ef7b81f98211b3feb68e5a856cab71f913")
 files = sys.argv[1:]
 for device in os.environ.get("DEVICES", "cpu").split(","):
     with md.photon("moondream/parakeet-redux", device=device, model_path=model_dir) as speech:

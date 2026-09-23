@@ -6,11 +6,11 @@ import SwiftUI
 enum Entry {
     static func main() {
         if CommandLine.arguments.contains("--transcribe") { CommandLineTranscriber.run() }
-        NoTypeApp.main()
+        SmallVoiceApp.main()
     }
 }
 
-struct NoTypeApp: App {
+struct SmallVoiceApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var delegate
 
     var body: some Scene {
@@ -41,7 +41,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
-/// `NoType --transcribe a.wav b.m4a …`: runs the engine on files and reports speed.
+/// `SmallVoice --transcribe a.wav b.m4a …`: runs the engine on files and reports speed.
 enum CommandLineTranscriber {
     static func run() -> Never {
         let files = Array(CommandLine.arguments.drop { $0 != "--transcribe" }.dropFirst())

@@ -1,10 +1,10 @@
-# NoType build helpers. Everything builds into ./build so paths stay predictable.
+# SmallVoice build helpers. Everything builds into ./build so paths stay predictable.
 DERIVED      := $(CURDIR)/build/DerivedData
 PKG_DERIVED  := $(CURDIR)/build/PackageDerivedData
 SOURCES      := $(DERIVED)/SourcePackages
 XCFLAGS      := -skipPackagePluginValidation -skipMacroValidation
 CONFIG       ?= Debug
-APP          := $(DERIVED)/Build/Products/$(CONFIG)/NoType.app
+APP          := $(DERIVED)/Build/Products/$(CONFIG)/SmallVoice.app
 INSTALL_DIR  ?= /Applications
 
 .PHONY: project build test install run dmg clean
@@ -13,7 +13,7 @@ project:
 	xcodegen generate
 
 build: project
-	xcodebuild -project NoType.xcodeproj -scheme NoType -configuration $(CONFIG) \
+	xcodebuild -project SmallVoice.xcodeproj -scheme SmallVoice -configuration $(CONFIG) \
 		-derivedDataPath $(DERIVED) $(XCFLAGS) build
 
 test:
@@ -22,10 +22,10 @@ test:
 
 install:
 	$(MAKE) build CONFIG=Release
-	-pkill -x NoType; sleep 0.5
-	rm -rf "$(INSTALL_DIR)/NoType.app"
-	ditto "$(DERIVED)/Build/Products/Release/NoType.app" "$(INSTALL_DIR)/NoType.app"
-	open "$(INSTALL_DIR)/NoType.app"
+	-pkill -x SmallVoice; sleep 0.5
+	rm -rf "$(INSTALL_DIR)/SmallVoice.app"
+	ditto "$(DERIVED)/Build/Products/Release/SmallVoice.app" "$(INSTALL_DIR)/SmallVoice.app"
+	open "$(INSTALL_DIR)/SmallVoice.app"
 
 run: build
 	open "$(APP)"
@@ -34,7 +34,7 @@ run: build
 # For a notarized image that opens anywhere, use scripts/notarize.sh instead.
 dmg:
 	$(MAKE) build CONFIG=Release
-	scripts/make-dmg.sh "$(DERIVED)/Build/Products/Release/NoType.app" build/NoType.dmg
+	scripts/make-dmg.sh "$(DERIVED)/Build/Products/Release/SmallVoice.app" build/SmallVoice.dmg
 
 clean:
 	rm -rf build

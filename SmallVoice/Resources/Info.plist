@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>NoType</string>
+	<string>SmallVoice</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -27,6 +27,6 @@
 	<key>NSHumanReadableCopyright</key>
 	<string>Speech model: Parakeet Redux by Moondream, based on NVIDIA Parakeet TDT 0.6B v3 (CC-BY-4.0).</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>NoType listens only while you dictate and turns your speech into text right on this Mac.</string>
+	<string>SmallVoice listens only while you dictate and turns your speech into text right on this Mac.</string>
 </dict>
 </plist>

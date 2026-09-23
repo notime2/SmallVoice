@@ -13,7 +13,7 @@ struct OnboardingView: View {
                     .foregroundStyle(.tint)
                     .frame(width: 68, height: 68)
                     .glassEffect(.regular.tint(.accentColor.opacity(0.15)), in: .circle)
-                Text("Welcome to NoType")
+                Text("Welcome to SmallVoice")
                     .font(.title2.weight(.semibold))
                 Text("Dictate into any app. Your voice is recognized on this Mac and never leaves it.")
                     .font(.callout)
@@ -26,7 +26,7 @@ struct OnboardingView: View {
                 VStack(spacing: 10) {
                     SetupStep(
                         symbol: "mic.fill", title: "Microphone",
-                        detail: "So NoType can hear you while you dictate.",
+                        detail: "So SmallVoice can hear you while you dictate.",
                         state: app.permissions.microphoneGranted ? .done : .action("Allow") {
                             Task { await app.permissions.requestMicrophone() }
                         })

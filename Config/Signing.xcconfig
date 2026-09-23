@@ -1,4 +1,4 @@
-// Code signing and bundle identity for NoType builds.
+// Code signing and bundle identity for SmallVoice builds.
 //
 // By default builds are signed ad hoc ("Sign to Run Locally"), so no Apple developer account is
 // needed. macOS then sees every rebuild as a new app and asks for Microphone and Accessibility
@@ -8,6 +8,6 @@
 CODE_SIGN_STYLE = Manual
 CODE_SIGN_IDENTITY = -
 DEVELOPMENT_TEAM =
-NOTYPE_BUNDLE_ID = io.github.notime2.NoType
+SMALLVOICE_BUNDLE_ID = io.github.notime2.SmallVoice
 
 #include? "Local.xcconfig"

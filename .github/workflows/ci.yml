@@ -54,6 +54,6 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: NoType-adhoc
-          path: build/NoType.dmg
+          name: SmallVoice-adhoc
+          path: build/SmallVoice.dmg
           if-no-files-found: error

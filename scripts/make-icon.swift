@@ -1,7 +1,7 @@
-// Renders NoType's app icon into the asset catalog: `swift scripts/make-icon.swift`
+// Renders SmallVoice's app icon into the asset catalog: `swift scripts/make-icon.swift`
 import AppKit
 
-let output = URL(fileURLWithPath: "NoType/Resources/Assets.xcassets/AppIcon.appiconset")
+let output = URL(fileURLWithPath: "SmallVoice/Resources/Assets.xcassets/AppIcon.appiconset")
 
 func render(pixels: Int) -> Data {
     let rep = NSBitmapImageRep(

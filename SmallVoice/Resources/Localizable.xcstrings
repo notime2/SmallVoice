@@ -11,12 +11,12 @@
         }
       }
     },
-    "About NoType": {
+    "About SmallVoice": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "О NoType"
+            "value": "О SmallVoice"
           }
         }
       }
@@ -421,12 +421,12 @@
         }
       }
     },
-    "Quit NoType": {
+    "Quit SmallVoice": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Завершить NoType"
+            "value": "Завершить SmallVoice"
           }
         }
       }
@@ -531,12 +531,12 @@
         }
       }
     },
-    "So NoType can hear you while you dictate.": {
+    "So SmallVoice can hear you while you dictate.": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Чтобы NoType слышал вас во время диктовки."
+            "value": "Чтобы SmallVoice слышал вас во время диктовки."
           }
         }
       }
@@ -671,12 +671,12 @@
         }
       }
     },
-    "Welcome to NoType": {
+    "Welcome to SmallVoice": {
       "localizations": {
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добро пожаловать в NoType"
+            "value": "Добро пожаловать в SmallVoice"
           }
         }
       }

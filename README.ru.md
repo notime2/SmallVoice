@@ -1,8 +1,8 @@
-# NoType
+# SmallVoice
 
 [English version](README.md)
 
-NoType - это нативная диктовка для macOS в строке меню. Зажмите клавишу и говорите: текст появится там,
+SmallVoice - это нативная диктовка для macOS в строке меню. Зажмите клавишу и говорите: текст появится там,
 где стоит курсор. Речь распознаётся прямо на Mac моделью
 [Parakeet Redux](https://huggingface.co/moondream/parakeet-redux). Это 1.58-битная версия NVIDIA
 Parakeet TDT 0.6B v3: 25 языков, включая русский и английский, с пунктуацией и регистром. Ничего не
@@ -34,22 +34,22 @@ Parakeet TDT 0.6B v3: 25 языков, включая русский и англ
 
 ## Установка релиза
 
-NoType не подписан сертификатом Apple Developer ID и не нотаризован: у проекта нет платного аккаунта
+SmallVoice не подписан сертификатом Apple Developer ID и не нотаризован: у проекта нет платного аккаунта
 Apple Developer. Поэтому скачанную копию macOS откроет только после того, как вы один раз это разрешите.
 
-1. Скачайте `NoType.dmg` со страницы Releases, откройте его и перетащите NoType в "Программы".
+1. Скачайте `SmallVoice.dmg` со страницы Releases, откройте его и перетащите SmallVoice в "Программы".
 2. Снимите с приложения карантин загрузки:
 
    ```bash
-   xattr -dr com.apple.quarantine /Applications/NoType.app
+   xattr -dr com.apple.quarantine /Applications/SmallVoice.app
    ```
 
-   Без Терминала: откройте NoType, закройте предупреждение и нажмите "Всё равно открыть" в
+   Без Терминала: откройте SmallVoice, закройте предупреждение и нажмите "Всё равно открыть" в
    Системные настройки -> Конфиденциальность и безопасность.
 
 Без постоянной подписи macOS считает каждую новую версию другим приложением. После обновления снова
 разрешите микрофон, а в Системные настройки -> Конфиденциальность и безопасность -> Универсальный
-доступ удалите старую запись NoType и включите новую.
+доступ удалите старую запись SmallVoice и включите новую.
 
 ## Сборка из исходников
 
@@ -57,7 +57,7 @@ Apple Developer. Поэтому скачанную копию macOS открое
 make install    # Release-сборка в /Applications и запуск
 make test       # тесты движка (тестам распознавания нужна скачанная модель)
 make build      # Debug-сборка в build/DerivedData
-make dmg        # build/NoType.dmg из Release-сборки
+make dmg        # build/SmallVoice.dmg из Release-сборки
 ```
 
 По умолчанию сборка подписывается ad-hoc, аккаунт разработчика Apple не нужен. Но тогда macOS считает
@@ -76,11 +76,11 @@ Apple Development из Xcode.
 - один раз скачать модель речи (178 МБ).
 
 Модель скачивается с Hugging Face на закреплённой ревизии, проверяется по SHA-256 и хранится в
-`~/Library/Application Support/NoType/Models/`.
+`~/Library/Application Support/SmallVoice/Models/`.
 
 ## Как выпустить релиз
 
-`make dmg` собирает `build/NoType.dmg` из Release-сборки. CI (GitHub Actions, Xcode 26) заодно
+`make dmg` собирает `build/SmallVoice.dmg` из Release-сборки. CI (GitHub Actions, Xcode 26) заодно
 запускает юнит-тесты движка и выкладывает этот образ с ad-hoc-подписью как артефакт сборки. Его и
 публикуют вместе с инструкцией по установке выше.
 
@@ -88,7 +88,7 @@ Apple Development из Xcode.
 тогда он открывался бы везде без этих шагов:
 
 ```bash
-xcrun notarytool store-credentials NoType --apple-id you@example.com --team-id ABCDE12345
+xcrun notarytool store-credentials SmallVoice --apple-id you@example.com --team-id ABCDE12345
 DEVELOPER_ID="Developer ID Application: Your Name (ABCDE12345)" scripts/notarize.sh
 ```
 
@@ -102,7 +102,7 @@ Packages/ParakeetKit/   движок распознавания на MLX (Metal 
   Decoder.swift         LSTM-предсказатель и жадное TDT-декодирование
   Segmenter.swift       нарезка длинного аудио по паузам
   ParakeetEngine.swift  actor: загрузка, прогрев, распознавание
-NoType/                 приложение (SwiftUI и AppKit)
+SmallVoice/                 приложение (SwiftUI и AppKit)
   Dictation/            логика клавиши, запись с микрофона, вставка текста
   Input/                горячие клавиши, разрешения
   Model/                загрузка и проверка модели
@@ -136,9 +136,9 @@ Redux равен -1, 0 или +1, умноженному на масштаб г�
 ### Отладочные флаги
 
 ```bash
-NoType.app/Contents/MacOS/NoType --transcribe a.wav b.m4a   # распознать файлы, показать скорость
-open NoType.app --args --hud-demo [recording|hands-free|processing|success|message]
-open NoType.app --args --onboarding
+SmallVoice.app/Contents/MacOS/SmallVoice --transcribe a.wav b.m4a   # распознать файлы, показать скорость
+open SmallVoice.app --args --hud-demo [recording|hands-free|processing|success|message]
+open SmallVoice.app --args --onboarding
 ```
 
 ## Приватность
@@ -149,7 +149,7 @@ open NoType.app --args --onboarding
 
 ## Лицензия и благодарности
 
-NoType распространяется по [лицензии MIT](LICENSE).
+SmallVoice распространяется по [лицензии MIT](LICENSE).
 
 - Модель речи: [Parakeet Redux](https://huggingface.co/moondream/parakeet-redux) от Moondream на основе
   [NVIDIA Parakeet TDT 0.6B v3](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3), лицензия

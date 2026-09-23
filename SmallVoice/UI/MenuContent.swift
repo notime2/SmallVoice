@@ -31,11 +31,11 @@ struct MenuContent: View {
             openSettings()
         }
         .keyboardShortcut(",")
-        Button("About NoType") { app.showAbout() }
+        Button("About SmallVoice") { app.showAbout() }
 
         Divider()
 
-        Button("Quit NoType") { NSApp.terminate(nil) }
+        Button("Quit SmallVoice") { NSApp.terminate(nil) }
             .keyboardShortcut("q")
     }
 }

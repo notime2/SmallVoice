@@ -6,13 +6,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "NoType"
+            "value": "SmallVoice"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "NoType"
+            "value": "SmallVoice"
           }
         }
       }
@@ -38,13 +38,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "NoType listens only while you dictate and turns your speech into text right on this Mac."
+            "value": "SmallVoice listens only while you dictate and turns your speech into text right on this Mac."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "NoType слушает только во время диктовки и превращает речь в текст прямо на этом Mac."
+            "value": "SmallVoice слушает только во время диктовки и превращает речь в текст прямо на этом Mac."
           }
         }
       }

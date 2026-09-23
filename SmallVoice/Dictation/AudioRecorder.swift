@@ -27,7 +27,7 @@ final class AudioRecorder: @unchecked Sendable {
     private static let framesPerBuffer: UInt32 = 320  // 20 ms
     private static let bufferCount = 6
 
-    private let callbacks = DispatchQueue(label: "NoType.audio", qos: .userInteractive)
+    private let callbacks = DispatchQueue(label: "SmallVoice.audio", qos: .userInteractive)
     private let samples = OSAllocatedUnfairLock<[Float]>(initialState: [])
     private let capturing = OSAllocatedUnfairLock(initialState: false)
     private var queue: AudioQueueRef?

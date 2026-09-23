@@ -3,4 +3,4 @@
 
 DEVELOPMENT_TEAM = ABCDE12345
 CODE_SIGN_IDENTITY = Apple Development
-NOTYPE_BUNDLE_ID = com.example.NoType
+SMALLVOICE_BUNDLE_ID = com.example.SmallVoice
