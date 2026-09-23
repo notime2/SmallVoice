@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-test:
+    name: Build and test (Xcode 26)
+    runs-on: macos-26
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sw_vers
+          xcodebuild -version
+
+      - name: Metal Toolchain
+        run: |
+          if ! xcrun metal --version >/dev/null 2>&1; then
+            xcodebuild -downloadComponent MetalToolchain
+          fi
+          xcrun metal --version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Cache Swift packages
+        uses: actions/cache@v4
+        with:
+          path: build/DerivedData/SourcePackages
+          key: spm-${{ runner.os }}-${{ hashFiles('project.yml', 'Packages/ParakeetKit/Package.swift', 'Packages/ParakeetKit/Package.resolved') }}
+
+      - name: Build the app
+        run: make build CONFIG=Release
+
+      - name: Engine unit tests
+        # Hosted runners have a virtual GPU, so the tests use MLX's CPU backend. The transcription
+        # tests need the 178 MB model and a real GPU: they skip here and run locally with `make test`.
+        env:
+          TEST_RUNNER_PARAKEET_TEST_DEVICE: cpu
+        run: make test
+
+      - name: Disk image (ad-hoc signed)
+        run: make dmg
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: NoType-adhoc
+          path: build/NoType.dmg
+          if-no-files-found: error

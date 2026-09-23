@@ -1,0 +1,54 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "CFBundleDisplayName": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NoType"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NoType"
+          }
+        }
+      }
+    },
+    "NSHumanReadableCopyright": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Speech model: Parakeet Redux by Moondream, based on NVIDIA Parakeet TDT 0.6B v3 (CC-BY-4.0)."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Модель речи: Parakeet Redux от Moondream на основе NVIDIA Parakeet TDT 0.6B v3 (CC-BY-4.0)."
+          }
+        }
+      }
+    },
+    "NSMicrophoneUsageDescription": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NoType listens only while you dictate and turns your speech into text right on this Mac."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "NoType слушает только во время диктовки и превращает речь в текст прямо на этом Mac."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}

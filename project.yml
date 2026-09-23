@@ -1,0 +1,64 @@
+name: NoType
+options:
+  bundleIdPrefix: io.github.notime2
+  deploymentTarget:
+    macOS: "26.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+configFiles:
+  Debug: Config/Signing.xcconfig
+  Release: Config/Signing.xcconfig
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
+    ENABLE_HARDENED_RUNTIME: YES
+    DEAD_CODE_STRIPPING: YES
+    LOCALIZATION_PREFERS_STRING_CATALOGS: YES
+    SWIFT_EMIT_LOC_STRINGS: YES
+packages:
+  ParakeetKit:
+    path: Packages/ParakeetKit
+  KeyboardShortcuts:
+    url: https://github.com/sindresorhus/KeyboardShortcuts
+    exactVersion: 3.1.0
+targets:
+  NoType:
+    type: application
+    platform: macOS
+    sources:
+      - path: NoType
+    dependencies:
+      - package: ParakeetKit
+      - package: KeyboardShortcuts
+    info:
+      path: NoType/Resources/Info.plist
+      properties:
+        CFBundleDisplayName: NoType
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSUIElement: true
+        LSApplicationCategoryType: public.app-category.productivity
+        NSMicrophoneUsageDescription: "NoType listens only while you dictate and turns your speech into text right on this Mac."
+        NSHumanReadableCopyright: "Speech model: Parakeet Redux by Moondream, based on NVIDIA Parakeet TDT 0.6B v3 (CC-BY-4.0)."
+    entitlements:
+      path: NoType/Resources/NoType.entitlements
+      properties:
+        com.apple.security.device.audio-input: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: $(NOTYPE_BUNDLE_ID)
+        PRODUCT_NAME: NoType
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ENABLE_APP_SANDBOX: NO
+schemes:
+  NoType:
+    build:
+      targets:
+        NoType: all
+    run:
+      config: Debug
+    profile:
+      config: Release
+    archive:
+      config: Release

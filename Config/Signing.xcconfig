@@ -1,0 +1,13 @@
+// Code signing and bundle identity for NoType builds.
+//
+// By default builds are signed ad hoc ("Sign to Run Locally"), so no Apple developer account is
+// needed. macOS then sees every rebuild as a new app and asks for Microphone and Accessibility
+// access again. To keep those grants across rebuilds, copy Local.example.xcconfig to
+// Local.xcconfig (ignored by git) and put your own team and bundle identifier there.
+
+CODE_SIGN_STYLE = Manual
+CODE_SIGN_IDENTITY = -
+DEVELOPMENT_TEAM =
+NOTYPE_BUNDLE_ID = io.github.notime2.NoType
+
+#include? "Local.xcconfig"

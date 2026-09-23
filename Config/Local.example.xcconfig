@@ -1,0 +1,6 @@
+// Copy this file to Local.xcconfig (ignored by git) to sign builds with your own certificate.
+// A stable signature lets macOS keep the Microphone and Accessibility grants across rebuilds.
+
+DEVELOPMENT_TEAM = ABCDE12345
+CODE_SIGN_IDENTITY = Apple Development
+NOTYPE_BUNDLE_ID = com.example.NoType
