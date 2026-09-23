@@ -8,6 +8,8 @@ appears wherever your cursor is. Speech is recognized on your Mac by
 Parakeet TDT 0.6B v3: 25 languages including English and Russian, with punctuation and casing.
 Nothing leaves your computer.
 
+![SmallVoice dictating into TextEdit: hold the key, speak, and the text appears at the cursor](docs/demo.gif)
+
 ## Using it
 
 | You do | SmallVoice does |
