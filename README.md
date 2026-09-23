@@ -33,7 +33,26 @@ Nothing leaves your computer.
 - To build: Xcode 26 or later with the Metal Toolchain (`xcodebuild -downloadComponent MetalToolchain`)
   and [XcodeGen](https://github.com/yonaskolb/XcodeGen) (`brew install xcodegen`)
 
-## Building
+## Installing a release
+
+NoType is not signed with an Apple Developer ID and not notarized: the project has no paid Apple
+Developer account. macOS therefore refuses to open a downloaded copy until you allow it once.
+
+1. Download `NoType.dmg` from the Releases page, open it and drag NoType to Applications.
+2. Remove the download quarantine:
+
+   ```bash
+   xattr -dr com.apple.quarantine /Applications/NoType.app
+   ```
+
+   Without Terminal: open NoType, close the warning, then click "Open Anyway" in System Settings ->
+   Privacy & Security.
+
+Without a stable signature every new version is a new app to macOS. After updating, allow the
+microphone again, and in System Settings -> Privacy & Security -> Accessibility remove the old
+NoType entry and switch the new one on.
+
+## Building from source
 
 ```bash
 make install    # Release build copied to /Applications and launched
@@ -45,9 +64,11 @@ make dmg        # build/NoType.dmg from the Release build
 Builds are signed ad hoc by default, so no Apple developer account is needed. macOS then treats
 every rebuild as a new app and asks for Microphone and Accessibility access again. To keep those
 grants, copy `Config/Local.example.xcconfig` to `Config/Local.xcconfig` (ignored by git) and set your
-team and bundle identifier there.
+team and bundle identifier there. A free Apple Development certificate from Xcode is enough.
 
-On first launch a setup window asks for:
+## First launch
+
+A setup window asks for:
 
 - microphone access;
 - Accessibility access (System Settings -> Privacy & Security -> Accessibility), which the shortcut
@@ -57,19 +78,19 @@ On first launch a setup window asks for:
 The model is downloaded from Hugging Face at a pinned revision, checked against its SHA-256 and kept
 in `~/Library/Application Support/NoType/Models/`.
 
-## Releases
+## Making a release
 
-`make dmg` packs whatever the build is signed with. A disk image that opens on any Mac without
-Gatekeeper warnings needs a Developer ID certificate (paid Apple Developer Program) and
-notarization, which `scripts/notarize.sh` does:
+`make dmg` builds `build/NoType.dmg` from the Release build. CI (GitHub Actions, Xcode 26) also runs
+the engine unit tests and uploads that ad-hoc signed image as a build artifact. That image is what
+gets published, together with the install steps above.
+
+With a Developer ID certificate, `scripts/notarize.sh` would sign and notarize the image so it opens
+anywhere without those steps:
 
 ```bash
 xcrun notarytool store-credentials NoType --apple-id you@example.com --team-id ABCDE12345
 DEVELOPER_ID="Developer ID Application: Your Name (ABCDE12345)" scripts/notarize.sh
 ```
-
-CI (GitHub Actions, Xcode 26) builds the app, runs the engine unit tests and uploads an ad-hoc
-signed disk image as a build artifact.
 
 ## How it works
 
