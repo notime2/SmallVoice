@@ -35,7 +35,7 @@ targets:
       path: SmallVoice/Resources/Info.plist
       properties:
         CFBundleDisplayName: SmallVoice
-        CFBundleShortVersionString: "1.0"
+        CFBundleShortVersionString: "0.1.0"
         CFBundleVersion: "1"
         LSUIElement: true
         LSApplicationCategoryType: public.app-category.productivity
