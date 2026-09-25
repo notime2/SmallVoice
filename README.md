@@ -151,23 +151,27 @@ project's documentation, the engine figures come from the
 [Parakeet Redux model card](https://huggingface.co/moondream/parakeet-redux), and one row was measured in
 this project on an M3 Pro.
 
-### The same 0.6B Parakeet, by weight format
+### The engines, and the apps that ship them
 
-Every Parakeet app below runs the same network. Parakeet Redux, the one SmallVoice uses, stores every
-encoder weight as -1, 0 or +1, and that is where the size and speed differences come from.
+Every Parakeet app below runs the same 0.6B network; what changes is the package it runs through and the
+weight format. Parakeet Redux, the one SmallVoice uses, stores every encoder weight as -1, 0 or +1.
 
-| Runtime | Weights | Real time (audio seconds per second of wall clock) |
-|---|---|---|
-| **Parakeet Redux in SmallVoice (MLX)** | **178 MB**, 171 MiB measured on disk | **88x to 105x**, measured here on an M3 Pro |
-| Parakeet Redux in Photon, the model's own runtime | 178 MB | 38x on the CPU, 43x on the GPU |
-| parakeet.cpp, q8_0 | 0.94 GB | 12x on the CPU, 38x on the GPU |
-| parakeet.cpp, f16 | 1.44 GB | 9x on the CPU, 39x on the GPU |
-| parakeet-mlx, fp32 | 2.51 GB | 37x on the GPU |
-| ONNX Runtime builds, int8 | 0.67 GB | 28x to 33x on the CPU |
-| Parakeet TDT v3 in CoreML, as the other Mac Parakeet apps ship it | 461 MiB measured on disk | not published |
+| Engine (package) | Weights | Real time (audio seconds per second of wall clock) | Shipped by |
+|---|---|---|---|
+| **Parakeet Redux in MLX, ternary** | **178 MB**, 171 MiB measured on disk | **88x to 105x**, measured here on an M3 Pro | **SmallVoice** |
+| Parakeet Redux in Photon, the model's own runtime | 178 MB | 38x on the CPU, 43x on the GPU | Moondream's Python package; no app in this list |
+| Parakeet TDT v3 in CoreML, through FluidAudio | 461 MiB measured on disk | not published | FluidVoice, VoiceInk, OpenSuperWhisper, EnviousWispr |
+| Parakeet TDT v3 in ONNX Runtime, through transcribe-rs | 0.67 GB, int8 | 28x to 33x on the CPU | Handy |
+| Whisper-family models in ggml, through whisper.cpp or transcribe.cpp | 75 MB to 2.9 GB | not published | Handy, VoiceInk, OpenSuperWhisper, FluidVoice |
+| WhisperKit on CoreML | 1.6 GB for Large v3 Turbo | not published | EnviousWispr |
+| Apple Speech | built in | not published | macOS Dictation, and FluidVoice as an option |
+| parakeet.cpp, q8_0 | 0.94 GB | 12x on the CPU, 38x on the GPU | - |
+| parakeet.cpp, f16 | 1.44 GB | 9x on the CPU, 39x on the GPU | - |
+| parakeet-mlx, fp32 | 2.51 GB | 37x on the GPU | - |
 
-Apart from the first and last rows, the figures are Moondream's, measured on an M2 MacBook Air. The
-original fp16 weights of this network are 1.2 GB.
+Apart from the first row, the figures are Moondream's, measured on an M2 MacBook Air. A dash means that no
+app in this list documents that build; superwhisper and MacWhisper run local Whisper models but do not
+document their runtime. The original fp16 weights of this network are 1.2 GB.
 
 ### What the smaller weights cost in accuracy
 
@@ -183,17 +187,17 @@ Word error rate in percent, lower is better, from the same model card:
 
 ### The apps
 
-| App | Speech model | Languages | Price | Licence | Platforms |
-|---|---|---|---|---|---|
-| **SmallVoice** | **178 MB** (171 MiB on disk) | 25 | free | MIT | macOS 26+, Apple silicon |
-| [FluidVoice](https://github.com/altic-dev/FluidVoice) | 250 MB to 2.9 GB, about 500 MB for Parakeet TDT v3 | 25, or 99 through Whisper | free | GPL-3.0 | macOS 15+, Apple silicon |
-| [EnviousWispr](https://github.com/saurabhav88/EnviousWispr) | 461 MiB, or 1.6 GB with WhisperKit | 25, or 99 through Whisper | free | GPL-3.0 | macOS 14+, Apple silicon |
-| [VoiceInk](https://github.com/Beingpax/VoiceInk) | 461 MiB, or 75 MB to 2.9 GB with Whisper | 25, or 99 through Whisper | paid build, free from source | GPL-3.0 | macOS 15+ |
-| [OpenSuperWhisper](https://github.com/Starmel/OpenSuperWhisper) | 461 MiB, or 75 MB to 2.9 GB with Whisper | 25, or 99 through Whisper | free | MIT | macOS, Apple silicon |
-| [Handy](https://github.com/cjpais/Handy) | 731 MB for Parakeet, or 487 MB to 1.6 GB with Whisper | 25, or 99 through Whisper | free | MIT | macOS, Windows, Linux |
-| [superwhisper](https://superwhisper.com) | not published, the free plan runs local Whisper only | 99 | free, Pro from $8.49 a month | proprietary | macOS, Windows, iOS, Android |
-| [MacWhisper](https://www.macwhisper.com/) | not published, the free tier runs the small Whisper models | 99 | free, Pro from €59 | proprietary | macOS |
-| macOS Dictation | built in | system languages | free | proprietary | macOS |
+| App | Engine | Speech model | Languages | Price | Licence | Platforms |
+|---|---|---|---|---|---|---|
+| **SmallVoice** | Parakeet Redux on MLX | **178 MB** (171 MiB on disk) | 25 | free | MIT | macOS 26+, Apple silicon |
+| [FluidVoice](https://github.com/altic-dev/FluidVoice) | FluidAudio CoreML, transcribe.cpp, Apple Speech | 250 MB to 2.9 GB, about 500 MB for Parakeet TDT v3 | 25, or 99 through Whisper | free | GPL-3.0 | macOS 15+, Apple silicon |
+| [EnviousWispr](https://github.com/saurabhav88/EnviousWispr) | FluidAudio CoreML, WhisperKit | 461 MiB, or 1.6 GB with WhisperKit | 25, or 99 through Whisper | free | GPL-3.0 | macOS 14+, Apple silicon |
+| [VoiceInk](https://github.com/Beingpax/VoiceInk) | whisper.cpp, FluidAudio CoreML, transcribe.cpp | 461 MiB, or 75 MB to 2.9 GB with Whisper | 25, or 99 through Whisper | paid build, free from source | GPL-3.0 | macOS 15+ |
+| [OpenSuperWhisper](https://github.com/Starmel/OpenSuperWhisper) | whisper.cpp, FluidAudio CoreML | 461 MiB, or 75 MB to 2.9 GB with Whisper | 25, or 99 through Whisper | free | MIT | macOS, Apple silicon |
+| [Handy](https://github.com/cjpais/Handy) | transcribe.cpp on ggml, transcribe-rs on ONNX Runtime | 731 MB for Parakeet, or 487 MB to 1.6 GB with Whisper | 25, or 99 through Whisper | free | MIT | macOS, Windows, Linux |
+| [superwhisper](https://superwhisper.com) | not documented, local Whisper on the free plan | not published | 99 | free, Pro from $8.49 a month | proprietary | macOS, Windows, iOS, Android |
+| [MacWhisper](https://www.macwhisper.com/) | not documented, small Whisper models in the free tier | not published | 99 | free, Pro from €59 | proprietary | macOS |
+| macOS Dictation | Apple Speech | built in | system languages | free | proprietary | macOS |
 
 Whisper model sizes are the standard whisper.cpp set; Whisper is what buys 99 languages, at the price of
 a few hundred megabytes to a few gigabytes and GPU inference. The ternary weights are not free either:
