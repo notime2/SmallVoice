@@ -143,6 +143,33 @@ open SmallVoice.app --args --hud-demo [recording|hands-free|processing|success|m
 open SmallVoice.app --args --onboarding
 ```
 
+## Сравнение с другими приложениями
+
+SmallVoice - не единственная бесплатная диктовка для Mac. Во всех приложениях ниже речь распознаётся
+на самом компьютере; разница в моделях, в том, что построено вокруг них, и в цене.
+
+| Приложение | Лицензия | Модели речи | Платформы | Коротко |
+|---|---|---|---|---|
+| **SmallVoice** | MIT | Parakeet Redux (1.58-битная Parakeet TDT 0.6B v3), загрузка 178 МБ | macOS 26+, Apple Silicon | GPU через MLX: десятки миллисекунд на диктовку и около 250 МБ памяти, 25 языков. Сознательно минималистичен: без ИИ-переписывания, облака и аккаунтов |
+| [FluidVoice](https://github.com/altic-dev/FluidVoice) | GPL-3.0 | Parakeet TDT v3 и v2, Parakeet Flash, Nemotron, Cohere, Whisper, Apple Speech | macOS 15+, Apple Silicon (Windows и iOS в планах) | Самый близкий "всё в одном": больше моделей (от 250 МБ до 3.5 ГБ), живой предпросмотр, режимы команд и правки текста, необязательная локальная или облачная ИИ-обработка |
+| [EnviousWispr](https://github.com/saurabhav88/EnviousWispr) | GPL-3.0 | Parakeet TDT v3 (CoreML на Neural Engine), WhisperKit Large v3 Turbo | macOS 14+, Apple Silicon | Parakeet v3 и необязательная локальная полировка текста (её модель EG-1 закрыта); вместе с Whisper - 99 языков |
+| [VoiceInk](https://github.com/Beingpax/VoiceInk) | исходники GPL-3.0, готовая сборка платная | Whisper (whisper.cpp), Parakeet (FluidAudio), SenseVoice | macOS 15+ | Самый настраиваемый: режимы под каждое приложение, учёт контекста, облачные провайдеры. Бесплатен, если собрать самому |
+| [OpenSuperWhisper](https://github.com/Starmel/OpenSuperWhisper) | MIT | Whisper (whisper.cpp), Parakeet (FluidAudio) | macOS, Apple Silicon | Запись с удержанием клавиши или кнопки мыши, очередь аудиофайлов |
+| [Handy](https://github.com/cjpais/Handy) | MIT | Whisper (whisper.cpp), Parakeet v3 (GGUF) | macOS, Windows, Linux | Кроссплатформенное приложение на Rust и Tauri; загрузки начинаются от 490 МБ |
+| [superwhisper](https://superwhisper.com) | условно бесплатно | на бесплатном плане только локальные модели Whisper | macOS, Windows, iOS, Android | Бесплатная диктовка без ограничений и без облака, но Parakeet, облачные модели и ИИ-режимы - в Pro |
+| [MacWhisper](https://www.macwhisper.com/) | условно бесплатно | Whisper, Parakeet | macOS | Сделан для расшифровки файлов и встреч, а не для живой диктовки; в бесплатной версии только небольшие модели Whisper |
+| Диктовка macOS | бесплатно, встроена | модель речи Apple | macOS | Ставить ничего не нужно, на Apple Silicon работает в основном на устройстве, но модель не выбрать и настроек почти нет |
+
+Большинство из них работают на Whisper: до 99 языков ценой от нескольких сотен мегабайт до
+нескольких гигабайт на диске и вывода на GPU. Parakeet TDT v3 покрывает 25 языков заметно меньшей
+моделью. SmallVoice идёт на шаг дальше: в Parakeet Redux каждый вес энкодера равен -1, 0 или +1,
+поэтому вся модель занимает 178 МБ и считается на 2-битных ядрах MLX. Отсюда диктовка за десятки
+миллисекунд и около 250 МБ памяти в простое.
+
+Отсутствие лишнего - тоже выбор: в SmallVoice нет ИИ-переписывания, режимов под приложения и облачных
+провайдеров, нет сборок для Windows и Linux, и нужен macOS 26. Если это важно, смотрите в сторону
+FluidVoice, EnviousWispr и VoiceInk.
+
 ## Приватность
 
 Звук записывается только во время диктовки и не сохраняется на диск. Распознавание работает локально.
