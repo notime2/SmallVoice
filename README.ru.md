@@ -150,23 +150,27 @@ SmallVoice - не единственная бесплатная диктовка
 проектов, данные о движке - из [карточки модели Parakeet Redux](https://huggingface.co/moondream/parakeet-redux),
 а одна строка измерена в этом проекте на M3 Pro.
 
-### Одна и та же Parakeet 0.6B в разных форматах весов
+### Движки и приложения, которые их используют
 
-Все приложения на Parakeet ниже запускают одну и ту же сеть. Parakeet Redux, который использует SmallVoice,
-хранит каждый вес энкодера как -1, 0 или +1 - отсюда и разница в размере и скорости.
+Все приложения на Parakeet ниже запускают одну и ту же сеть; меняется пакет, через который она работает, и
+формат весов. Parakeet Redux, который использует SmallVoice, хранит каждый вес энкодера как -1, 0 или +1.
 
-| Реализация | Веса | Real time (секунд аудио в секунду реального времени) |
-|---|---|---|
-| **Parakeet Redux в SmallVoice (MLX)** | **178 МБ**, 171 МиБ на диске | **88x-105x**, измерено здесь на M3 Pro |
-| Parakeet Redux в Photon, собственном рантайме модели | 178 МБ | 38x на CPU, 43x на GPU |
-| parakeet.cpp, q8_0 | 0.94 ГБ | 12x на CPU, 38x на GPU |
-| parakeet.cpp, f16 | 1.44 ГБ | 9x на CPU, 39x на GPU |
-| parakeet-mlx, fp32 | 2.51 ГБ | 37x на GPU |
-| Сборки на ONNX Runtime, int8 | 0.67 ГБ | 28x-33x на CPU |
-| Parakeet TDT v3 в CoreML, в таком виде его скачивают остальные приложения для Mac | 461 МиБ на диске | не публикуется |
+| Движок (пакет) | Веса | Real time (секунд аудио в секунду реального времени) | Используют |
+|---|---|---|---|
+| **Parakeet Redux на MLX, тернарные веса** | **178 МБ**, 171 МиБ на диске | **88x-105x**, измерено здесь на M3 Pro | **SmallVoice** |
+| Parakeet Redux в Photon, собственном рантайме модели | 178 МБ | 38x на CPU, 43x на GPU | Python-пакет Moondream; из приложений - никто |
+| Parakeet TDT v3 в CoreML через FluidAudio | 461 МиБ на диске | не публикуется | FluidVoice, VoiceInk, OpenSuperWhisper, EnviousWispr |
+| Parakeet TDT v3 в ONNX Runtime через transcribe-rs | 0.67 ГБ, int8 | 28x-33x на CPU | Handy |
+| Модели семейства Whisper в ggml через whisper.cpp или transcribe.cpp | от 75 МБ до 2.9 ГБ | не публикуется | Handy, VoiceInk, OpenSuperWhisper, FluidVoice |
+| WhisperKit на CoreML | 1.6 ГБ для Large v3 Turbo | не публикуется | EnviousWispr |
+| Apple Speech | встроен | не публикуется | Диктовка macOS и FluidVoice как опция |
+| parakeet.cpp, q8_0 | 0.94 ГБ | 12x на CPU, 38x на GPU | - |
+| parakeet.cpp, f16 | 1.44 ГБ | 9x на CPU, 39x на GPU | - |
+| parakeet-mlx, fp32 | 2.51 ГБ | 37x на GPU | - |
 
-Кроме первой и последней строки данные принадлежат Moondream и измерены на MacBook Air с M2. Исходные веса
-этой сети в fp16 занимают 1.2 ГБ.
+Кроме первой строки данные принадлежат Moondream и измерены на MacBook Air с M2. Прочерк значит, что ни одно
+приложение из списка не заявляет такую сборку; superwhisper и MacWhisper работают на локальных моделях
+Whisper, но свой рантайм не документируют. Исходные веса этой сети в fp16 занимают 1.2 ГБ.
 
 ### Чем меньшие веса платят в точности
 
@@ -182,17 +186,17 @@ WER в процентах, меньше - лучше, из той же карт�
 
 ### Приложения
 
-| Приложение | Модель речи | Языки | Цена | Лицензия | Платформы |
-|---|---|---|---|---|---|
-| **SmallVoice** | **178 МБ** (171 МиБ на диске) | 25 | бесплатно | MIT | macOS 26+, Apple Silicon |
-| [FluidVoice](https://github.com/altic-dev/FluidVoice) | от 250 МБ до 2.9 ГБ, около 500 МБ у Parakeet TDT v3 | 25, или 99 через Whisper | бесплатно | GPL-3.0 | macOS 15+, Apple Silicon |
-| [EnviousWispr](https://github.com/saurabhav88/EnviousWispr) | 461 МиБ, или 1.6 ГБ с WhisperKit | 25, или 99 через Whisper | бесплатно | GPL-3.0 | macOS 14+, Apple Silicon |
-| [VoiceInk](https://github.com/Beingpax/VoiceInk) | 461 МиБ, или от 75 МБ до 2.9 ГБ с Whisper | 25, или 99 через Whisper | сборка платная, из исходников бесплатно | GPL-3.0 | macOS 15+ |
-| [OpenSuperWhisper](https://github.com/Starmel/OpenSuperWhisper) | 461 МиБ, или от 75 МБ до 2.9 ГБ с Whisper | 25, или 99 через Whisper | бесплатно | MIT | macOS, Apple Silicon |
-| [Handy](https://github.com/cjpais/Handy) | 731 МБ у Parakeet, или от 487 МБ до 1.6 ГБ с Whisper | 25, или 99 через Whisper | бесплатно | MIT | macOS, Windows, Linux |
-| [superwhisper](https://superwhisper.com) | не публикуется, на бесплатном плане только локальный Whisper | 99 | бесплатно, Pro от $8.49 в месяц | проприетарная | macOS, Windows, iOS, Android |
-| [MacWhisper](https://www.macwhisper.com/) | не публикуется, в бесплатной версии только небольшие модели Whisper | 99 | бесплатно, Pro от €59 | проприетарная | macOS |
-| Диктовка macOS | встроена | системные языки | бесплатно | проприетарная | macOS |
+| Приложение | Движок | Модель речи | Языки | Цена | Лицензия | Платформы |
+|---|---|---|---|---|---|---|
+| **SmallVoice** | Parakeet Redux на MLX | **178 МБ** (171 МиБ на диске) | 25 | бесплатно | MIT | macOS 26+, Apple Silicon |
+| [FluidVoice](https://github.com/altic-dev/FluidVoice) | FluidAudio CoreML, transcribe.cpp, Apple Speech | от 250 МБ до 2.9 ГБ, около 500 МБ у Parakeet TDT v3 | 25, или 99 через Whisper | бесплатно | GPL-3.0 | macOS 15+, Apple Silicon |
+| [EnviousWispr](https://github.com/saurabhav88/EnviousWispr) | FluidAudio CoreML, WhisperKit | 461 МиБ, или 1.6 ГБ с WhisperKit | 25, или 99 через Whisper | бесплатно | GPL-3.0 | macOS 14+, Apple Silicon |
+| [VoiceInk](https://github.com/Beingpax/VoiceInk) | whisper.cpp, FluidAudio CoreML, transcribe.cpp | 461 МиБ, или от 75 МБ до 2.9 ГБ с Whisper | 25, или 99 через Whisper | сборка платная, из исходников бесплатно | GPL-3.0 | macOS 15+ |
+| [OpenSuperWhisper](https://github.com/Starmel/OpenSuperWhisper) | whisper.cpp, FluidAudio CoreML | 461 МиБ, или от 75 МБ до 2.9 ГБ с Whisper | 25, или 99 через Whisper | бесплатно | MIT | macOS, Apple Silicon |
+| [Handy](https://github.com/cjpais/Handy) | transcribe.cpp на ggml, transcribe-rs на ONNX Runtime | 731 МБ у Parakeet, или от 487 МБ до 1.6 ГБ с Whisper | 25, или 99 через Whisper | бесплатно | MIT | macOS, Windows, Linux |
+| [superwhisper](https://superwhisper.com) | не документирован, на бесплатном плане локальный Whisper | не публикуется | 99 | бесплатно, Pro от $8.49 в месяц | проприетарная | macOS, Windows, iOS, Android |
+| [MacWhisper](https://www.macwhisper.com/) | не документирован, в бесплатной версии небольшие модели Whisper | не публикуется | 99 | бесплатно, Pro от €59 | проприетарная | macOS |
+| Диктовка macOS | Apple Speech | встроена | системные языки | бесплатно | проприетарная | macOS |
 
 Размеры моделей Whisper - это стандартный набор whisper.cpp; именно Whisper даёт 99 языков ценой от
 нескольких сотен мегабайт до нескольких гигабайт и вывода на GPU. Тернарные веса тоже не бесплатны: на
