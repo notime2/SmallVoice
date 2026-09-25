@@ -141,6 +141,33 @@ open SmallVoice.app --args --hud-demo [recording|hands-free|processing|success|m
 open SmallVoice.app --args --onboarding
 ```
 
+## How it compares
+
+SmallVoice is not the only free dictation for the Mac. Every app below keeps speech on your Mac; the
+differences are the models they run, what is built around them, and what they cost.
+
+| App | Licence | Speech models | Platforms | In short |
+|---|---|---|---|---|
+| **SmallVoice** | MIT | Parakeet Redux (1.58-bit Parakeet TDT 0.6B v3), a 178 MB download | macOS 26+, Apple silicon | GPU through MLX: tens of milliseconds per dictation and about 250 MB of memory, 25 languages. Deliberately minimal: no AI rewriting, no cloud, no accounts |
+| [FluidVoice](https://github.com/altic-dev/FluidVoice) | GPL-3.0 | Parakeet TDT v3 and v2, Parakeet Flash, Nemotron, Cohere, Whisper, Apple Speech | macOS 15+, Apple silicon (Windows and iOS planned) | The closest all-rounder: more models (250 MB to 3.5 GB), live preview, command and write modes, optional local or cloud AI cleanup |
+| [EnviousWispr](https://github.com/saurabhav88/EnviousWispr) | GPL-3.0 | Parakeet TDT v3 (CoreML on the Neural Engine), WhisperKit Large v3 Turbo | macOS 14+, Apple silicon | Parakeet v3 plus optional on-device polishing (its own EG-1 model is not open source); Whisper brings 99 languages |
+| [VoiceInk](https://github.com/Beingpax/VoiceInk) | GPL-3.0 source, the compiled build is paid | Whisper (whisper.cpp), Parakeet (FluidAudio), SenseVoice | macOS 15+ | The most configurable: per-app modes, context awareness, cloud providers. Free if you build it yourself |
+| [OpenSuperWhisper](https://github.com/Starmel/OpenSuperWhisper) | MIT | Whisper (whisper.cpp), Parakeet (FluidAudio) | macOS, Apple silicon | Hold-to-record from a key or a mouse button, a queue for audio files |
+| [Handy](https://github.com/cjpais/Handy) | MIT | Whisper (whisper.cpp), Parakeet v3 (GGUF) | macOS, Windows, Linux | The cross-platform one, built with Rust and Tauri; downloads start around 490 MB and go up |
+| [superwhisper](https://superwhisper.com) | freemium | local Whisper models only on the free plan | macOS, Windows, iOS, Android | Unlimited private dictation for free, but Parakeet, cloud models and AI modes are Pro |
+| [MacWhisper](https://www.macwhisper.com/) | freemium | Whisper, Parakeet | macOS | Built around transcribing files and meetings rather than live dictation; the free tier stops at the small Whisper models |
+| macOS Dictation | free, built in | Apple's speech model | macOS | Nothing to install, and mostly on-device on Apple silicon, but there is no model choice and little to control |
+
+Most of these run Whisper: up to 99 languages, at the cost of a few hundred megabytes to a few
+gigabytes and GPU inference. Parakeet TDT v3 covers 25 languages in a much smaller model. SmallVoice
+goes one step further: Parakeet Redux keeps every encoder weight at -1, 0 or +1, so the whole model is
+178 MB and runs on MLX's 2-bit kernels, which is why a dictation takes tens of milliseconds and the app
+idles at about 250 MB.
+
+What SmallVoice leaves out is also the point: no AI rewriting, no per-app modes, no cloud providers,
+no Windows or Linux build, and it asks for macOS 26. If those matter to you, FluidVoice, EnviousWispr
+and VoiceInk are the natural places to look.
+
 ## Privacy
 
 Audio is captured only while you dictate and is never written to disk. Recognition runs locally.
